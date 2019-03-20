@@ -43,19 +43,19 @@ We will be insisting on a minimal reproduce scenario in order to save maintainer
 
 Unfortunately we are not able to investigate / fix bugs without a minimal reproduction, so if we don't hear back from you we are going to close an issue that don't have enough info to be reproduced.
 
-You can file new issues by filling out our [new issue form](https://github.com/cipchk/ng-alain/issues/new).
+You can file new issues by filling out our [new issue form](https://github.com/ng-alain/ng-alain/issues/new).
 
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-* Search [GitHub](https://github.com/cipchk/ng-alain/pulls) for an open or closed PR
+* Search [GitHub](https://github.com/ng-alain/ng-alain/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 * Make your changes in a new git branch:
 
-     ```shell
-     git checkout -b my-fix-branch master
-     ```
+  ```shell
+  git checkout -b my-fix-branch master
+  ```
 
 * Create your patch, **including appropriate test cases**.
 * Follow our [Coding Rules](#rules).
@@ -64,16 +64,17 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   [commit message conventions](#commit). Adherence to these conventions
   is necessary because release notes are automatically generated from these messages.
 
-     ```shell
-     git commit -a
-     ```
+  ```shell
+  git commit -a
+  ```
+
   Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
 
 * Push your branch to GitHub:
 
-    ```shell
-    git push origin my-fix-branch
-    ```
+  ```shell
+  git push origin my-fix-branch
+  ```
 
 * In GitHub, send a pull request to `ng-alain:master`.
 * If we suggest changes then:
@@ -81,10 +82,10 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   * Re-run the ng-alain test suites to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
-    ```shell
-    git rebase master -i
-    git push -f
-    ```
+  ```shell
+  git rebase master -i
+  git push -f
+  ```
 
 That's it! Thank you for your contribution!
 
@@ -95,27 +96,27 @@ from the main (upstream) repository:
 
 * Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-    ```shell
-    git push origin --delete my-fix-branch
-    ```
+  ```shell
+  git push origin --delete my-fix-branch
+  ```
 
 * Check out the master branch:
 
-    ```shell
-    git checkout master -f
-    ```
+  ```shell
+  git checkout master -f
+  ```
 
 * Delete the local branch:
 
-    ```shell
-    git branch -D my-fix-branch
-    ```
+  ```shell
+  git branch -D my-fix-branch
+  ```
 
 * Update your master with the latest upstream version:
 
-    ```shell
-    git pull --ff upstream master
-    ```
+  ```shell
+  git pull --ff upstream master
+  ```
 
 ## <a name="rules"></a> Coding Rules
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
@@ -148,11 +149,12 @@ to read on GitHub as well as in various git tools.
 
 Footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Samples: (even more [samples](https://github.com/cipchk/ng-alain/commits/master))
+Samples: (even more [samples](https://github.com/ng-alain/ng-alain/commits/master))
 
 ```
 docs(changelog): update change log to beta.5
 ```
+
 ```
 fix(release): need to depend on latest rxjs and zone.js
 
@@ -194,7 +196,6 @@ reference GitHub issues that this commit **Closes**.
 
 A detailed explanation can be found in this [document][commit-message-format].
 
-
 [commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#
-[github]: https://github.com/cipchk/ng-alain
+[github]: https://github.com/ng-alain/ng-alain
 [plunker]: http://plnkr.co/edit

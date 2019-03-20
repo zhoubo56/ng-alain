@@ -1,37 +1,59 @@
-import { Component, Inject } from '@angular/core';
-import { SettingsService, MenuService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from '@core/i18n/i18n.service';
+import { Component, Inject, Input, ChangeDetectionStrategy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { SettingsService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { InputBoolean } from '@delon/util';
+
+import { I18NService } from '@core';
 
 @Component({
-    selector: 'header-i18n',
-    template: `
-    <nz-dropdown>
-        <div nz-dropdown>
-            <i class="anticon anticon-edit"></i>
-            {{ 'language' | translate}}
-            <i class="anticon anticon-down"></i>
-        </div>
-        <ul nz-menu>
-            <li nz-menu-item *ngFor="let item of langs"
-            [nzSelected]="item.code === settings.layout.lang"
-                (click)="change(item.code)">{{item.text}}</li>
-        </ul>
-    </nz-dropdown>
-    `
+  selector: 'header-i18n',
+  template: `
+  <nz-dropdown nzPlacement="bottomRight">
+    <div *ngIf="showLangText" nz-dropdown>
+      <i nz-icon type="global"></i>
+      {{ 'menu.lang' | translate}}
+      <i nz-icon type="down"></i>
+    </div>
+    <i *ngIf="!showLangText" nz-dropdown nz-icon type="global"></i>
+    <ul nz-menu>
+      <li nz-menu-item *ngFor="let item of langs" [nzSelected]="item.code === curLangCode"
+        (click)="change(item.code)">
+          <span role="img" [attr.aria-label]="item.text" class="pr-xs">{{item.abbr}}</span>
+          {{item.text}}
+      </li>
+    </ul>
+  </nz-dropdown>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderI18nComponent {
 
-    langs: any[];
+  /** Whether to display language text */
+  @Input() @InputBoolean() showLangText = true;
 
-    constructor(
-        public settings: SettingsService,
-        @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
-    ) {
-        this.langs = this.i18n.getLangs();
-    }
+  get langs() {
+    return this.i18n.getLangs();
+  }
 
-    change(lang: string) {
-        this.i18n.use(lang);
-        this.settings.setLayout('lang', lang);
-    }
+  get curLangCode() {
+    return this.settings.layout.lang;
+  }
+
+  constructor(
+    private settings: SettingsService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    @Inject(DOCUMENT) private doc: any,
+  ) {
+  }
+
+  change(lang: string) {
+    const spinEl = this.doc.createElement('div');
+    spinEl.setAttribute('class', `page-loading ant-spin ant-spin-lg ant-spin-spinning`);
+    spinEl.innerHTML = `<span class="ant-spin-dot ant-spin-dot-spin"><i></i><i></i><i></i><i></i></span>`;
+    this.doc.body.appendChild(spinEl);
+
+    this.i18n.use(lang);
+    this.settings.setLayout('lang', lang);
+    setTimeout(() => this.doc.location.reload());
+  }
 }

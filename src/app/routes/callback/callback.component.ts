@@ -1,32 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '@delon/auth';
+import { SettingsService } from '@delon/theme';
 
 @Component({
-    selector: 'app-callback',
-    template: ``,
-    providers: [ SocialService ]
+  selector: 'app-callback',
+  template: ``,
+  providers: [SocialService],
 })
 export class CallbackComponent implements OnInit {
+  type: string;
 
-    type: string;
+  constructor(
+    private socialService: SocialService,
+    private settingsSrv: SettingsService,
+    private route: ActivatedRoute,
+  ) {}
 
-    constructor(private socialService: SocialService, private route: ActivatedRoute, private router: Router) {}
+  ngOnInit(): void {
+    this.type = this.route.snapshot.params['type'];
+    this.mockModel();
+  }
 
-    ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            this.type = params['type'];
-            this.mockModel();
-        });
-    }
-
-    private mockModel() {
-        this.socialService.callback({
-            token: '123456789',
-            name: 'cipchk',
-            email: `${this.type}@${this.type}.com`,
-            id: 10000,
-            time: +new Date
-        });
-    }
+  private mockModel() {
+    const info = {
+      token: '123456789',
+      name: 'cipchk',
+      email: `${this.type}@${this.type}.com`,
+      id: 10000,
+      time: +new Date(),
+    };
+    this.settingsSrv.setUser({
+      ...this.settingsSrv.user,
+      ...info,
+    });
+    this.socialService.callback(info);
+  }
 }

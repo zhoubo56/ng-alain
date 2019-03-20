@@ -1,21 +1,21 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SettingsService } from '@delon/theme';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html'
+  selector: 'layout-header',
+  templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-    searchToggleStatus: boolean;
+  searchToggleStatus: boolean;
 
-    constructor(public settings: SettingsService) { }
+  constructor(public settings: SettingsService) { }
 
-    toggleCollapsedSidebar() {
-        this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
-    }
+  toggleCollapsedSidebar() {
+    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+  }
 
-    searchToggleChange() {
-        this.searchToggleStatus = !this.searchToggleStatus;
-    }
-
+  searchToggleChange() {
+    this.searchToggleStatus = !this.searchToggleStatus;
+  }
 }
